@@ -3,11 +3,14 @@ package helper
 import (
 	"context"
 	"net/http"
+
 	// "encoding/json"
+	"os"
 	"strings"
+	"time"
+
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
-	"time"
 )
 
 type CtxKey string
@@ -36,7 +39,13 @@ func JWTVerif(next http.HandlerFunc) http.HandlerFunc {
 
 		// tokenString := strings.Replace(authHeader, "Bearer", "", 1)
 
+		// Counter alg:none attack
 		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+
+			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+				return nil, jwt.ErrSignatureInvalid
+			}
+
 			return jwtKey, nil
 		})
 
@@ -57,7 +66,7 @@ func JWTVerif(next http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
-var jwtKey = []byte("undeveloped_alpha")
+var jwtKey = []byte(os.Getenv("JWT_SECRET"))
 
 func GenerateToken(userID uuid.UUID, email string) (string, error) {
 

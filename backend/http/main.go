@@ -54,10 +54,10 @@ func ServerOn() {
 		http.StripPrefix("/uploads/",
 			http.FileServer(http.Dir("./http/storage/uploads"))))
 
-	fmt.Println("Server Run On : 1986")
+	fmt.Println("Server Run On : 8080")
 	// http.ListenAndServe(":1986", nil)
 	
-	log.Fatal(http.ListenAndServe(":1986", nil))
+	log.Fatal(http.ListenAndServe(":8080", nil))
 
 	
 }
