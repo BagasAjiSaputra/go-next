@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Go Next
 
-## Getting Started
+> Short description of what this project does.
 
-First, run the development server:
+
+- [Tech Stack](#tech-stack)
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [Project Structure](#project-structure)
+- [Available Scripts](#available-scripts)
+- [API Documentation](#api-documentation)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+
+---
+
+## Tech Stack
+
+**Frontend:**
+- [Next.js 14](https://nextjs.org/) - React Framework
+- [TypeScript](https://www.typescriptlang.org/) - Type Safety
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+
+**Backend:**
+- [Go](https://golang.org/) - REST API
+- [PostgreSQL](https://www.postgresql.org/) - Database
+- [GORM](https://gorm.io/) - ORM
+
+---
+
+## Prerequisites
+
+Make sure you have the following installed:
+
+- [Node.js](https://nodejs.org/) >= 18.x
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+- [Go](https://golang.org/) >= 1.21
+
+---
+
+
+### 1. Install dependencies
+
+```bash
+cd frontend
+npm install
+```
+
+### 2. Setup environment variables
+
+```bash
+cp .env.example .env.local
+```
+
+Fill in the required values in `.env.local` (see [Environment Variables](#environment-variables)).
+
+### 3. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 4. Environment Variables
 
-## Learn More
+Create a `.env.local` file in the `frontend` directory:
 
-To learn more about Next.js, take a look at the following resources:
+```env
+COMING SOON
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+### 5. Docker
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+docker build -t frontend .
+docker run -p 3000:3000 frontend
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
