@@ -9,6 +9,7 @@ import (
 	"go_learn/http/config"
 	"go_learn/http/helpers"
 	"go_learn/http/models"
+	"fmt"
 )
 
 func Login(w http.ResponseWriter, r *http.Request) {
@@ -63,30 +64,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		"token" : token,
 	}
 
-	// for _, user := range database.Members {
-
-	// 	if user.Email == request.Email && user.Password == request.Password {
-
-	// 		token, err := helper.GenerateToken(user.ID, user.Email)
-
-	// 		if err != nil {
-	// 			helper.ResponseWrite(w, http.StatusInternalServerError, "Server Error")
-	// 			return
-	// 		}
-
-	// 		response := map[string]string{
-	// 			"token" : token,
-	// 		}
-
-	// 		// w.Header().Set("Content-Type", "application/json")
-
-	// 		json.NewEncoder(w).Encode(response)
-	// 		return
-
-	// 	}
-
-	// }
 
 	// helper.ResponseWrite(w, http.StatusUnauthorized, "Invalid Credentials")
+	fmt.Println("Login Success :", u.Email )
 	json.NewEncoder(w).Encode(response)
 }

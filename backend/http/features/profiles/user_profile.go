@@ -8,6 +8,7 @@ import (
 	"go_learn/http/helpers"
 	"go_learn/http/config"
 	"go_learn/http/models"
+	"fmt"
 
 )
 
@@ -37,6 +38,8 @@ func GetProfile( w http.ResponseWriter, r *http.Request) {
 		"email" : u.Email,
 		"username" : u.Username,
 	}
+
+	fmt.Println("User ID : ", userID)
 
 	json.NewEncoder(w).Encode(response)
 
