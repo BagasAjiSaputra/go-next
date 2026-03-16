@@ -39,7 +39,7 @@ func ServerOn() {
 	http.HandleFunc("/register", users.CreateUsers)
 
 	// PostgreSQL
-	http.HandleFunc("/users", RouteUsers)
+	http.HandleFunc("/users", helper.JWTVerif(RouteUsers))
 
 	// Get Profile
 	http.HandleFunc("/profile", helper.JWTVerif(profile.GetProfile))

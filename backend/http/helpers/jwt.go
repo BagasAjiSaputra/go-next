@@ -42,9 +42,9 @@ func JWTVerif(next http.HandlerFunc) http.HandlerFunc {
 		// Counter alg:none attack
 		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 
-			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-				return nil, jwt.ErrSignatureInvalid
-			}
+			// if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			// 	return nil, jwt.ErrSignatureInvalid
+			// }
 
 			return jwtKey, nil
 		})
