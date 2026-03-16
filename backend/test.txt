@@ -1,0 +1,60 @@
+	// totalRows := 100000 
+
+	// start := time.Now()
+	// for i := 0; i < totalRows; i++ {
+	// 	_, err := postgre.DB.Exec("INSERT INTO users (username, email) VALUES ($1, $2)", 
+	// 		fmt.Sprintf("user_%d", i), fmt.Sprintf("email_%d@test.com", i))
+	// 	if err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// }
+	// fmt.Printf("Single Insert %d rows: %v\n", totalRows, time.Since(start))
+
+	postgre.DB.SetMaxOpenConns(100) // Batasi koneksi ke DB agar tidak crash
+	postgre.DB.SetMaxIdleConns(50)
+
+	totalInserts := 100000 // Total data yang ingin dimasukkan
+	workerCount := 1000   // Simulasi 1000 user bersamaan
+
+	jobs := make(chan int, totalInserts)
+	var wg sync.WaitGroup
+
+	fmt.Printf("Memulai simulasi %d user untuk insert %d data...\n", workerCount, totalInserts)
+	start := time.Now()
+
+	// 3. Jalankan 1000 Worker (Goroutines)
+	for w := 1; w <= workerCount; w++ {
+		wg.Add(1)
+		go func(workerID int) {
+			defer wg.Done()
+			for j := range jobs {
+				// Simulasi query insert
+				query := "INSERT INTO users (username, email) VALUES ($1, $2)"
+				_, err := postgre.DB.Exec(query, 
+					fmt.Sprintf("user_%d_%d", workerID, j), 
+					fmt.Sprintf("email_%d@test.com", j))
+				
+				if err != nil {
+					fmt.Printf("Worker %d error: %v\n", workerID, err)
+					return
+				}
+			}
+		}(w)
+	}
+
+	// 4. Kirim data ke antrean
+	for i := 1; i <= totalInserts; i++ {
+		jobs <- i
+	}
+	close(jobs) // Tutup channel setelah semua data dikirim
+
+	// 5. Tunggu semua worker selesai
+	wg.Wait()
+
+	duration := time.Since(start)
+	fmt.Println("--------------------------------------")
+	fmt.Printf("Selesai dalam: %v\n", duration)
+	fmt.Printf("Rata-rata kecepatan: %.2f insert/detik\n", float64(totalInserts)/duration.Seconds())
+
+netstat -ano | findstr :1986
+taskkill /PID 9368 /F
