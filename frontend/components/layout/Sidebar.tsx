@@ -1,46 +1,66 @@
-// components/Sidebar.tsx
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 
 const navItems = [
     { label: "Dashboard", href: "/dashboard" },
-    { label: "Product",   href: "/product" },
-    // { label: "Settings",  href: "/dashboard/settings" },
+    { label: "Product", href: "/product" },
+    { label: "Profile", href: "/profile" },
 ];
 
 export default function Sidebar() {
-    return (
-        <aside className="fixed top-0 left-0 w-56 h-screen bg-white border-r border-gray-100 flex flex-col z-10">
+    const [collapsed, setCollapsed] = useState(false);
 
-            {/* Logo */}
-            <div className="px-6 py-5 border-b border-gray-100">
-                <span className="text-sm font-semibold text-gray-900 tracking-tight">Go Next</span>
+    return (
+        <aside
+            className={`${
+                collapsed ? "w-20" : "w-64"
+            } h-screen bg-white border-r border-gray-200 flex flex-col transition-all duration-300 shadow-sm`}
+        >
+            {/* Header */}
+            <div className="flex items-center justify-between px-4 py-5 border-b border-gray-200">
+                {!collapsed && <span className="font-bold text-lg text-slate-900">Go Next</span>}
+                <button
+                    onClick={() => setCollapsed(!collapsed)}
+                    className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors"
+                    aria-label="Toggle sidebar"
+                >
+                    {collapsed ? "→" : "←"}
+                </button>
             </div>
 
-            {/* Nav */}
-            <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
+            {/* Navigation */}
+            <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
                 {navItems.map((item) => (
                     <Link
                         key={item.href}
                         href={item.href}
-                        className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                        className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-100 transition-colors ${
+                            collapsed ? "justify-center" : ""
+                        }`}
+                        title={collapsed ? item.label : ""}
                     >
-                        {item.label}
+                        <span className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0" />
+                        {!collapsed && <span>{item.label}</span>}
                     </Link>
                 ))}
             </nav>
 
             {/* Logout */}
-            <div className="px-3 py-4 border-t border-gray-100">
-                <form action={"Logout"}>
+            <div className="px-3 py-4 border-t border-gray-200">
+                <form action="Logout">
                     <button
                         type="submit"
-                        className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors text-left"
+                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-red-50 hover:text-red-600 transition-colors ${
+                            collapsed ? "justify-center" : ""
+                        }`}
                     >
-                        Logout
+                        <span className="text-lg">↩</span>
+                        {!collapsed && <span>Logout</span>}
                     </button>
                 </form>
             </div>
-
         </aside>
     );
 }

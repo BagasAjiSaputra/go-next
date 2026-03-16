@@ -28,8 +28,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${jakarta.variable} ${firaCode.variable} font-sans antialiased`}>
-        <Sidebar/>
-        {children}
+        <div className="flex min-h-screen bg-slate-50">
+          <Sidebar />
+          <main className="w-full md:flex-1 overflow-auto">
+            <div className="p-4 sm:p-6 max-w-7xl">
+              {children}
+            </div>
+          </main>
+        </div>
       </body>
     </html>
   );

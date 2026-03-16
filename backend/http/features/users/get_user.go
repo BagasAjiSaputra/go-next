@@ -11,7 +11,7 @@ import (
 
 func GetUsers(w http.ResponseWriter, r *http.Request) {
 
-	rows, err := postgre.DB.Query("SELECT id, email, password, username FROM users")
+	rows, err := postgre.DB.Query("SELECT id, email, password, username, phone, location, updated_at FROM users")
 
 	if err != nil {
 		// helper.ResponseWrite(w, http.StatusInternalServerError, "Failed Query Select Users")
